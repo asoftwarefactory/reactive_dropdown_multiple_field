@@ -53,6 +53,8 @@ class DropDownMultiSelect<T> extends StatefulWidget {
   /// style for the selected values
   final TextStyle? selectedValuesStyle;
 
+  final Widget Function(List<T> items)? selectedItemsBuilder;
+
   const DropDownMultiSelect({
     Key? key,
     required this.options,
@@ -71,6 +73,7 @@ class DropDownMultiSelect<T> extends StatefulWidget {
     this.decoration,
     this.validator,
     this.readOnly = false,
+    this.selectedItemsBuilder,
   }) : super(key: key);
 
   @override
@@ -164,14 +167,24 @@ class DropDownMultiSelectState<TState>
                       : const EdgeInsets.symmetric(horizontal: 20),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 20),
-                    child: Text(
+                    child: widget.selectedItemsBuilder
+                            ?.call(widget.selectedValues) ??
+                        Text(
+                          widget.selectedValues.isNotEmpty
+                              ? widget.selectedValues
+                                  .map((e) => e.toString())
+                                  .reduce((a, b) => '$a , $b')
+                              : widget.whenEmpty ?? '',
+                          style: widget.selectedValuesStyle,
+                        ),
+                    /* child: Text(
                       widget.selectedValues.isNotEmpty
                           ? widget.selectedValues
                               .map((e) => e.toString())
                               .reduce((a, b) => '$a , $b')
                           : widget.whenEmpty ?? '',
                       style: widget.selectedValuesStyle,
-                    ),
+                    ), */
                   ));
         }),
       ],
