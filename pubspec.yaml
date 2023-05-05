@@ -1,6 +1,8 @@
 name: reactive_dropdown_multiple_field
 description: A new Flutter package project.
 version: 0.0.1
+repository: https://github.com/asoftwarefactory/reactive_dropdown_multiple_field
+issue_tracker: https://github.com/asoftwarefactory/reactive_dropdown_multiple_field/issues
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
