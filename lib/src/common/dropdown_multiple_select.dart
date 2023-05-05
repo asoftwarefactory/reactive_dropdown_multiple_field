@@ -177,15 +177,8 @@ class DropDownMultiSelectState<TState>
                               : widget.whenEmpty ?? '',
                           style: widget.selectedValuesStyle,
                         ),
-                    /* child: Text(
-                      widget.selectedValues.isNotEmpty
-                          ? widget.selectedValues
-                              .map((e) => e.toString())
-                              .reduce((a, b) => '$a , $b')
-                          : widget.whenEmpty ?? '',
-                      style: widget.selectedValuesStyle,
-                    ), */
-                  ));
+                  ),
+                );
         }),
       ],
     );
