@@ -29,6 +29,7 @@ class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
     bool readOnly = false,
     TextStyle? selectedValuesStyle,
     String Function(ViewDataType?)? validator,
+    Widget Function(List<ViewDataType>)? selectedItemsBuilder,
   }) : super(
           key: key,
           formControl: control,
@@ -62,6 +63,7 @@ class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
               readOnly: readOnly,
               selectedValuesStyle: selectedValuesStyle,
               validator: validator,
+              selectedItemsBuilder: selectedItemsBuilder,
             );
           },
         );
