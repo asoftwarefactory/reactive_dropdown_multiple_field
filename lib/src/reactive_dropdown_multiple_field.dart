@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'common/models/label_builder_data.dart';
 import 'common/widgets/dropdown_multiple_select.dart';
 
 class ReactiveDropdownMultipleField<T>
@@ -27,6 +28,7 @@ class ReactiveDropdownMultipleField<T>
     bool readOnly = false,
     TextStyle? selectedValuesStyle,
     String Function(T?)? validator,
+    LabelBuilderData Function(T)? labelBuilder,
   }) : super(
           key: key,
           formControl: control,
@@ -57,6 +59,7 @@ class ReactiveDropdownMultipleField<T>
               readOnly: readOnly,
               selectedValuesStyle: selectedValuesStyle,
               validator: validator,
+              labelBuilder: labelBuilder,
             );
           },
         );
