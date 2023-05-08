@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'common/dropdown_multiple_select.dart';
+import 'common/widgets/dropdown_multiple_select.dart';
 
 class ReactiveDropdownMultipleField<T>
     extends ReactiveFormField<List<T>, List<T>> {
