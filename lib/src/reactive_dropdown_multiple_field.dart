@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'common/dropdown_multiple_select.dart';
 
-class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
-    extends ReactiveFormField<List<ModelDataType>, List<ViewDataType>> {
+class ReactiveDropdownMultipleField<T>
+    extends ReactiveFormField<List<T>, List<T>> {
   ReactiveDropdownMultipleField({
     Key? key,
     Key? dropdownKey,
-    FormControl<List<ModelDataType>>? control,
+    FormControl<List<T>>? control,
     String? formControlName,
     Map<String, String Function(Object)>? validationMessages,
-    ControlValueAccessor<List<ModelDataType>, List<ViewDataType>>?
-        valueAccessor,
-    bool Function(FormControl<List<ModelDataType>>)? showErrors,
+    ControlValueAccessor<List<T>, List<T>>? valueAccessor,
+    bool Function(FormControl<List<T>>)? showErrors,
     FocusNode? focusNode,
     // ---------------------- //
-    Widget Function(List<ViewDataType>)? childBuilder,
-    required List<ViewDataType> options,
-    String Function(List<ViewDataType>, ViewDataType)? labelBuilder,
+    Widget Function(List<T>)? childBuilder,
+    required List<T> options,
+    String Function(List<T>, T)? labelBuilder,
     String? whenEmpty,
     InputDecoration inputDecoration = const InputDecoration(),
     bool enabled = true,
@@ -25,11 +24,11 @@ class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
     TextStyle? hintStyle,
     Widget? icon,
     bool isDense = true,
-    Widget Function(ViewDataType)? menuItembuilder,
+    Widget Function(T)? menuItembuilder,
     bool readOnly = false,
     TextStyle? selectedValuesStyle,
-    String Function(ViewDataType?)? validator,
-    Widget Function(List<ViewDataType>)? selectedItemsBuilder,
+    String Function(T?)? validator,
+    Widget Function(List<T>)? selectedItemsBuilder,
   }) : super(
           key: key,
           formControl: control,
@@ -38,17 +37,14 @@ class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
           valueAccessor: valueAccessor,
           showErrors: showErrors,
           focusNode: focusNode,
-          builder:
-              (ReactiveFormFieldState<List<ModelDataType>, List<ViewDataType>>
-                  field) {
+          builder: (ReactiveFormFieldState<List<T>, List<T>> field) {
             final effectiveDecoration = inputDecoration
                 .applyDefaults(Theme.of(field.context).inputDecorationTheme);
-            return DropDownMultiSelect<ViewDataType>(
+            return DropDownMultiSelect<T>(
               key: dropdownKey,
-              labelBuilder: labelBuilder,
               decoration: effectiveDecoration,
               childBuilder: childBuilder,
-              onChanged: (List<ViewDataType> selectedValues) {
+              onChanged: (List<T> selectedValues) {
                 field.didChange(selectedValues);
               },
               options: options,
@@ -63,7 +59,6 @@ class ReactiveDropdownMultipleField<ModelDataType, ViewDataType>
               readOnly: readOnly,
               selectedValuesStyle: selectedValuesStyle,
               validator: validator,
-              selectedItemsBuilder: selectedItemsBuilder,
             );
           },
         );

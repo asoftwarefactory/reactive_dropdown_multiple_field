@@ -1,6 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+class _TheState {}
+
+var _theState = RM.inject(() => _TheState());
+
+class RowWrapper extends InheritedWidget {
+  final dynamic data;
+  final bool Function() shouldNotify;
+  const RowWrapper({
+    super.key,
+    required Widget child,
+    this.data,
+    required this.shouldNotify,
+  }) : super(child: child);
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return true;
+  }
+}
+
+class _SelectRow extends StatelessWidget {
+  final Function(bool) onChange;
+  final bool selected;
+  final String text;
+
+  const _SelectRow(
+      {Key? key,
+      required this.onChange,
+      required this.selected,
+      required this.text})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onChange(!selected);
+        _theState.notify();
+      },
+      child: SizedBox(
+        height: kMinInteractiveDimension,
+        child: Row(
+          children: [
+            Checkbox(
+                value: selected,
+                onChanged: (x) {
+                  onChange(x!);
+                  _theState.notify();
+                }),
+            Text(text)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 ///
 /// A Dropdown multiselect menu
 ///
@@ -8,8 +65,6 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 class DropDownMultiSelect<T> extends StatefulWidget {
   /// The options form which a user can select
   final List<T> options;
-
-  final String Function(List<T> options, T value)? labelBuilder;
 
   /// Selected Values
   final List<T> selectedValues;
@@ -53,12 +108,9 @@ class DropDownMultiSelect<T> extends StatefulWidget {
   /// style for the selected values
   final TextStyle? selectedValuesStyle;
 
-  final Widget Function(List<T> items)? selectedItemsBuilder;
-
   const DropDownMultiSelect({
     Key? key,
     required this.options,
-    this.labelBuilder,
     required this.selectedValues,
     required this.onChanged,
     this.whenEmpty,
@@ -73,7 +125,6 @@ class DropDownMultiSelect<T> extends StatefulWidget {
     this.decoration,
     this.validator,
     this.readOnly = false,
-    this.selectedItemsBuilder,
   }) : super(key: key);
 
   @override
@@ -136,9 +187,7 @@ class DropDownMultiSelectState<TState>
                         ? widget.menuItembuilder!(x)
                         : _SelectRow(
                             selected: widget.selectedValues.contains(x),
-                            text:
-                                widget.labelBuilder?.call(widget.options, x) ??
-                                    x.toString(),
+                            text: x.toString(),
                             onChange: (isSelected) {
                               if (isSelected) {
                                 var ns = widget.selectedValues;
@@ -156,73 +205,26 @@ class DropDownMultiSelectState<TState>
               )
               .toList(),
         ),
-        _theState.rebuild(() {
-          return widget.childBuilder != null
-              ? widget.childBuilder!(widget.selectedValues)
-              : Padding(
-                  padding: widget.decoration != null
-                      ? widget.decoration!.contentPadding != null
-                          ? widget.decoration!.contentPadding!
-                          : const EdgeInsets.symmetric(horizontal: 10)
-                      : const EdgeInsets.symmetric(horizontal: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: widget.selectedItemsBuilder
-                            ?.call(widget.selectedValues) ??
-                        Text(
-                          widget.selectedValues.isNotEmpty
-                              ? widget.selectedValues
-                                  .map((e) => e.toString())
-                                  .reduce((a, b) => '$a , $b')
-                              : widget.whenEmpty ?? '',
-                          style: widget.selectedValuesStyle,
-                        ),
+        _theState.rebuild(() => widget.childBuilder != null
+            ? widget.childBuilder!(widget.selectedValues)
+            : Padding(
+                padding: widget.decoration != null
+                    ? widget.decoration!.contentPadding != null
+                        ? widget.decoration!.contentPadding!
+                        : const EdgeInsets.symmetric(horizontal: 10)
+                    : const EdgeInsets.symmetric(horizontal: 20),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Text(
+                    widget.selectedValues.isNotEmpty
+                        ? widget.selectedValues
+                            .map((e) => e.toString())
+                            .reduce((a, b) => '$a , $b')
+                        : widget.whenEmpty ?? '',
+                    style: widget.selectedValuesStyle,
                   ),
-                );
-        }),
+                ))),
       ],
     );
   }
 }
-
-class _SelectRow extends StatelessWidget {
-  final Function(bool) onChange;
-  final bool selected;
-  final String text;
-
-  const _SelectRow({
-    Key? key,
-    required this.onChange,
-    required this.selected,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(context) {
-    return InkWell(
-      onTap: () {
-        onChange(!selected);
-        _theState.notify();
-      },
-      child: SizedBox(
-        height: kMinInteractiveDimension,
-        child: Row(
-          children: [
-            Checkbox(
-              value: selected,
-              onChanged: (x) {
-                onChange(x!);
-                _theState.notify();
-              },
-            ),
-            Text(text)
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TheState {}
-
-final _theState = RM.inject(() => _TheState());
