@@ -16,7 +16,6 @@ class ReactiveDropdownMultipleField<T>
     // ---------------------- //
     Widget Function(List<T>)? childBuilder,
     required List<T> options,
-    String Function(List<T>, T)? labelBuilder,
     String? whenEmpty,
     InputDecoration inputDecoration = const InputDecoration(),
     bool enabled = true,
@@ -28,7 +27,6 @@ class ReactiveDropdownMultipleField<T>
     bool readOnly = false,
     TextStyle? selectedValuesStyle,
     String Function(T?)? validator,
-    Widget Function(List<T>)? selectedItemsBuilder,
   }) : super(
           key: key,
           formControl: control,
