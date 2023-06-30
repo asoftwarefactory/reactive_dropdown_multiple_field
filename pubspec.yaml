@@ -14,7 +14,7 @@ dependency_overrides:
 dependencies:
   flutter:
     sdk: flutter
-  reactive_forms: ^16.0.0
+  reactive_forms: ^15.0.0
   states_rebuilder: ^6.3.0
 
 dev_dependencies:
