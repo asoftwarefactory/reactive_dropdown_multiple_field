@@ -5,13 +5,13 @@ repository: https://github.com/asoftwarefactory/reactive_dropdown_multiple_field
 issue_tracker: https://github.com/asoftwarefactory/reactive_dropdown_multiple_field/issues
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  reactive_forms: ^16.0.3
+  reactive_forms: ^16.1.0
   states_rebuilder: ^6.3.0
 
 dev_dependencies:
