@@ -6,14 +6,14 @@ import 'common/widgets/dropdown_multiple_select.dart';
 class ReactiveDropdownMultipleField<T>
     extends ReactiveFormField<List<T>, List<T>> {
   ReactiveDropdownMultipleField({
-    Key? key,
+    super.key,
     Key? dropdownKey,
     FormControl<List<T>>? control,
-    String? formControlName,
-    Map<String, String Function(Object)>? validationMessages,
-    ControlValueAccessor<List<T>, List<T>>? valueAccessor,
-    bool Function(FormControl<List<T>>)? showErrors,
-    FocusNode? focusNode,
+    super.formControlName,
+    super.validationMessages,
+    super.valueAccessor,
+    super.showErrors,
+    super.focusNode,
     // ---------------------- //
     Widget Function(List<T>)? childBuilder,
     required List<T> options,
@@ -30,13 +30,7 @@ class ReactiveDropdownMultipleField<T>
     String Function(T?)? validator,
     LabelBuilderData Function(T)? labelBuilder,
   }) : super(
-          key: key,
           formControl: control,
-          formControlName: formControlName,
-          validationMessages: validationMessages,
-          valueAccessor: valueAccessor,
-          showErrors: showErrors,
-          focusNode: focusNode,
           builder: (ReactiveFormFieldState<List<T>, List<T>> field) {
             final effectiveDecoration = inputDecoration
                 .applyDefaults(Theme.of(field.context).inputDecorationTheme);
@@ -46,6 +40,7 @@ class ReactiveDropdownMultipleField<T>
               childBuilder: childBuilder,
               onChanged: (List<T> selectedValues) {
                 field.didChange(selectedValues);
+                control?.updateValue(selectedValues);
               },
               options: options,
               selectedValues: field.value ?? [],
