@@ -4,7 +4,7 @@ import 'common/models/label_builder_data.dart';
 import 'common/widgets/dropdown_multiple_select.dart';
 
 class ReactiveDropdownMultipleField<T>
-    extends ReactiveFormField<List<T>, List<T>> {
+    extends ReactiveFocusableFormField<List<T>, List<T>> {
   ReactiveDropdownMultipleField({
     super.key,
     Key? dropdownKey,
