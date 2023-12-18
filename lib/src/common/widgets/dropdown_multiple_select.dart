@@ -56,7 +56,7 @@ class DropDownMultiSelect<T> extends StatefulWidget {
   final LabelBuilderData Function(T)? labelBuilder;
 
   const DropDownMultiSelect({
-    Key? key,
+    super.key,
     required this.options,
     required this.selectedValues,
     required this.onChanged,
@@ -73,7 +73,7 @@ class DropDownMultiSelect<T> extends StatefulWidget {
     this.validator,
     this.readOnly = false,
     this.labelBuilder,
-  }) : super(key: key);
+  });
 
   @override
   DropDownMultiSelectState createState() => DropDownMultiSelectState<T>();
@@ -204,11 +204,10 @@ class _SelectRow extends StatelessWidget {
   final String text;
 
   const _SelectRow({
-    Key? key,
     required this.onChange,
     required this.selected,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

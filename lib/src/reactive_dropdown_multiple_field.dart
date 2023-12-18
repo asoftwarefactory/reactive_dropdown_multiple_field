@@ -40,7 +40,7 @@ class ReactiveDropdownMultipleField<T>
               childBuilder: childBuilder,
               onChanged: (List<T> selectedValues) {
                 field.didChange(selectedValues);
-                control?.updateValue(selectedValues);
+                field.control.updateValue(selectedValues);
               },
               options: options,
               selectedValues: field.value ?? [],
